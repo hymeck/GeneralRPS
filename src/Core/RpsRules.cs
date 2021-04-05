@@ -16,9 +16,9 @@ namespace GeneralRPS.Core
             var result = false;
 
             int tmp = pivot;
-            while (tmp <= rightBound)
+            while (++tmp <= rightBound)
             {
-                if (++tmp > cardinality)
+                if (tmp > cardinality)
                     tmp = 1;
                 if (tmp == target)
                 {
@@ -31,14 +31,14 @@ namespace GeneralRPS.Core
         }
 
 
-        public static Result Judge(int cardinality, int range, int leftElement, int rightElement)
+        public static Result Judge(int cardinality, int leftElement, int rightElement)
         {
             var result = Result.Draw;
             
             if (leftElement != rightElement)
             {
                 // var leftBound = LeftShiftBound(cardinality, range, leftElement);
-                var rightBound = RightShiftBound(cardinality, range, leftElement);
+                var rightBound = RightShiftBound(cardinality, cardinality >> 1, leftElement);
 
                 result = InRight(cardinality, rightBound, leftElement, rightElement)
                     ? Result.Lose

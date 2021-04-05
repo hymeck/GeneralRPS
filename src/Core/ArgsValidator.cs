@@ -13,11 +13,19 @@ namespace GeneralRPS.Core
 
         public static string[] CheckCount(string[] args)
         {
-            if (args.Length % 2 == 0)
+            if (args.Length < 3)
                 throw new ArgsCountException($"Count is not odd.");
             return args;
         }
 
+        public static string[] CheckIsCountOdd(string[] args)
+        {
+            if (args.Length % 2 == 0)
+                throw new ArgsCountNotOddException($"Count is not odd.");
+            return args;
+        }
+
+        // todo: too high complexity
         public static bool HasUniqueElements(string[] source)
         {
             var result = true;
