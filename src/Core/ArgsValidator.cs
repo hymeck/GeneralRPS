@@ -2,27 +2,25 @@
 
 namespace GeneralRPS.Core
 {
-    public static class ArgsValidator
+    public class ArgsValidator
     {
-        public static string[] CheckNull(string[] args)
-        {
-            if (args == null)
-                throw new ArgumentNullException(nameof(args));
-            return args;
-        }
+        private readonly string[] args;
 
-        public static string[] CheckCount(string[] args)
+        public ArgsValidator(string[] args) => 
+            this.args = args;
+
+        public ArgsValidator CheckCount()
         {
             if (args.Length < 3)
-                throw new ArgsCountException($"Count is not odd.");
-            return args;
+                throw new ArgsCountException($"Count is less than 3.");
+            return this;
         }
 
-        public static string[] CheckIsCountOdd(string[] args)
+        public ArgsValidator CheckIsCountOdd()
         {
             if (args.Length % 2 == 0)
                 throw new ArgsCountNotOddException($"Count is not odd.");
-            return args;
+            return this;
         }
 
         // todo: too high complexity
@@ -42,11 +40,11 @@ namespace GeneralRPS.Core
             return result;
         }
 
-        public static string[] CheckUniqueness(string[] args, Func<string[], bool> unique)
+        public ArgsValidator CheckUniqueness(Func<string[], bool> unique)
         {
             if (!unique(args))
                 throw new ArgsUniquenessException("There are at least two the same elements.");
-            return args;
+            return this;
         }
     }
 }
