@@ -11,10 +11,12 @@
         // todo: horrible O(n). may be try O(1)?
         private bool IsInRight(int cardinality, int rightBound, int pivot, int target)
         {
+            if (target == rightBound)
+                return true;
+            
             var result = false;
-
             var tmp = pivot;
-            while (++tmp <= rightBound)
+            while (++tmp != rightBound)
             {
                 if (tmp > cardinality)
                     tmp = 1;
@@ -25,7 +27,6 @@
                     break;
                 }
             }
-
             return result;
         }
         

@@ -8,7 +8,7 @@ namespace GeneralRPS.App
     {
         public Printer PrintUsage()
         {
-            WriteLine("usage: rps [shape]...");
+            WriteLine("usage: [shape]...");
             WriteLine("\tshape - list of shapes");
             return this;
         }
