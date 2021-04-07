@@ -1,18 +1,21 @@
 ﻿using GeneralRPS.Core;
 using static System.Console;
+using static GeneralRPS.App.Utils;
 
 namespace GeneralRPS.App
 {
     public class Interactor
     {
         private readonly string[] shapes;
+
         public Interactor(string[] shapes) =>
             this.shapes = shapes;
 
         public Interactor Interact()
         {
-            var computerShape = Utils.GenerateRandomShapeNumber(1, shapes.Length);
-            var (keyHmac, hmac) = Utils.GenerateHmacs(computerShape);
+            var computerShape = GenerateRandomShapeNumber(1, shapes.Length);
+            var key = GenerateKey();
+            var hmac = GenerateHmac(key, computerShape);
 
             var p = new Printer();
             p.PrintMessageAndHex("HMAC:", hmac);
@@ -22,9 +25,9 @@ namespace GeneralRPS.App
             var res = PlayOnce(shapes.Length, userShape, computerShape);
             p.PrintComputerMove(shapes, computerShape);
             p.PrintResult(res);
-            
-            p.PrintMessageAndHex("HMAC key:", keyHmac);
-            
+
+            p.PrintMessageAndHex("HMAC key:", key);
+
             return this;
         }
 
@@ -42,8 +45,7 @@ namespace GeneralRPS.App
                     continue;
 
                 return shape;
-            }
-            while (true);
+            } while (true);
         }
 
         private Result PlayOnce(int cardinality, int shapeNumber, int computerShapeNumber)

@@ -24,13 +24,11 @@ namespace GeneralRPS.App
             return ((v - min) % (max - min + 1) + (max - min + 1)) % (max - min + 1) + min;
         }
 
-        public static (byte[] keyHmac, byte[] hmac) GenerateHmacs(int shapeNumber)
+        public static byte[] GenerateHmac(byte[] key, int shapeNumber)
         {
-            var key = GenerateKey();
             var hg = new HmacGenerator();
-            var keyHmac = hg.Generate(key);
             var hmac = hg.Generate(key, BitConverter.GetBytes(shapeNumber));
-            return (keyHmac, hmac);
+            return hmac;
         }
     }
 }
